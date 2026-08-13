@@ -1,0 +1,142 @@
+{
+  "_doc": "Tamil Music Composer Agent — Song Specification Format",
+
+  "metadata": {
+    "_doc_title_en": "Song title in English/romanised form. REQUIRED (at least one of title_en or title_ta).",
+    "title_en": "Dream or Wind",
+
+    "_doc_title_ta": "Song title in Tamil script. REQUIRED (at least one of title_en or title_ta).",
+    "title_ta": "கனவா நீ காற்றா",
+
+    "_doc_artist": "Artist/credit name. Default: 'AI Composer'.",
+    "artist": "AI Composer",
+
+    "_doc_language": "ISO 639-1 language code for vocals. ACE-Step supports: ar, az, bg, bn, ca, cs, da, de, el, en, es, fa, fi, fr, he, hi, hr, ht, hu, id, is, it, ja, ko, la, lt, ms, ne, nl, no, pa, pl, pt, ro, ru, sa, sk, sr, sv, sw, ta, te, th, tl, tr, uk, ur, vi, yue, zh, unknown. Default: 'unknown'.",
+    "language": "ta",
+
+    "_doc_disclosure": "AI generation disclosure text for metadata/YouTube descriptions.",
+    "disclosure": "AI-generated music using ACE-Step 1.5"
+  },
+
+  "music": {
+    "_doc_genre": "Free-text genre description. Examples: 'melodic ballad', 'upbeat pop', 'kuthu dance', 'carnatic fusion', 'hip hop', 'rock anthem', 'jazz', 'EDM', 'folk', 'devotional', 'classical'. Gets inserted into the ACE-Step caption.",
+    "genre": "melodic ballad",
+
+    "_doc_mood": "Array of mood descriptors. Examples: 'romantic', 'tender', 'energetic', 'melancholic', 'joyful', 'dark', 'uplifting', 'intense', 'calm', 'nostalgic', 'devotional', 'playful'. Joined with 'and' in the caption.",
+    "mood": ["romantic", "tender"],
+
+    "_doc_bpm": "Beats per minute. Range: 30–300. Common ranges: ballad 60–80, pop 100–130, dance 120–150, kuthu 130–160. Set null for auto-detection by the LLM.",
+    "bpm": 72,
+
+    "_doc_key": "Musical key. Format: note + quality. Notes: A, B, C, D, E, F, G (with optional # or b). Qualities: 'major', 'minor'. Examples: 'C major', 'A minor', 'Bb major', 'F# minor'. Leave empty for auto-detection.",
+    "key": "E minor",
+
+    "_doc_time_signature": "Time signature numerator as string. '2' = 2/4, '3' = 3/4, '4' = 4/4 (most common), '6' = 6/8. Leave empty for auto-detection.",
+    "time_signature": "4",
+
+    "_doc_instruments": "Array of instrument names. Examples: 'acoustic guitar', 'electric guitar', 'piano', 'synthesizer', 'strings', 'violin', 'flute', 'veena', 'mridangam', 'tabla', 'sitar', 'drums', 'bass guitar', 'trumpet', 'saxophone', 'harmonium'. These appear in the ACE-Step caption.",
+    "instruments": ["acoustic guitar", "strings", "piano"],
+
+    "_doc_orchestration": "Orchestration density hint. Examples: 'soft', 'minimal', 'lush', 'full', 'sparse', 'heavy', 'delicate'. Prefixed to the instruments list in the caption.",
+    "orchestration": "soft",
+
+    "_doc_vocal_style": "Vocal description. Free text. Examples: 'male, emotional, clear', 'female, powerful, high-pitched', 'male and female duet, harmonious', 'raspy male vocals', 'soft female soprano'. For duets, describe both voices.",
+    "vocal_style": "male, emotional, clear",
+
+    "_doc_reference_style": "Reference style/influence description. Free text. Examples: 'cinematic Indian film music, lullaby feel', 'A.R. Rahman style orchestration', '90s Tamil film music', 'Ilaiyaraaja classical fusion', 'Bollywood dance number'. Appended to caption.",
+    "reference_style": "cinematic Indian film music, lullaby feel"
+  },
+
+  "lyrics": {
+    "_doc_use_tamil_script": "If true, send lines_ta to ACE-Step; if false, send lines_en. Falls back to the other if the chosen one is empty.",
+    "use_tamil_script": false,
+
+    "_doc_sections": "Array of lyric sections. Each section has a tag, and lines in English transliteration and/or Tamil script.",
+    "sections": [
+      {
+        "_doc_tag": "Section label. Common tags: 'Intro', 'Verse 1', 'Verse 2', 'Pre-Chorus', 'Chorus', 'Bridge', 'Outro', 'Interlude', 'Hook', 'Rap'. ACE-Step uses these as [Tag] headers.",
+        "tag": "Intro",
+
+        "_doc_voice": "Optional. For duets, specify which voice sings this section: 'male', 'female', 'both', or omit for default. Used in caption building for duet songs.",
+        "voice": "male",
+
+        "_doc_lines_en": "Lyric lines in English/romanised Tamil. Markers: '~' (tilde) binds words as one phrase (stripped to space for ACE-Step), '|' (pipe) marks syllable breaks (stripped entirely for ACE-Step). Both are preserved in annotated lyrics for LRC post-processing.",
+        "lines_en": ["Kanavaa... illai~kaatraa..."],
+
+        "_doc_lines_ta": "Same lines in Tamil script. Markers same as lines_en.",
+        "lines_ta": ["கனவா... இல்லை~காற்றா..."]
+      },
+      {
+        "tag": "Verse 1",
+        "voice": "male",
+        "lines_en": [
+          "Kai|yil midha|kkum kanavaa~nee",
+          "Kai~kaal mulai|tha kaatraa~nee"
+        ],
+        "lines_ta": ["கையில் மிதக்கும் கனவா நீ", "கை கால் முளைத்த காற்றா நீ"]
+      },
+      {
+        "tag": "Verse 2",
+        "voice": "female",
+        "lines_en": [
+          "Kan~neer thodai|kkum meha~maa",
+          "Kan~nadi kaatu|m nila~vaa"
+        ],
+        "lines_ta": ["கண்ணீர் தொடைக்கும் மேகமா", "கண்ணாடி காட்டும் நிலவா"]
+      },
+      {
+        "tag": "Chorus",
+        "voice": "both",
+        "lines_en": [
+          "Kanavaa~nee kaatraa~nee",
+          "En uyiraa~nee en uyiree~nee",
+          "Thoondri marai|yum thoo|ral nee|yaa",
+          "Thondu|m mana|thil nindra nee|yaa"
+        ],
+        "lines_ta": [
+          "கனவா நீ காற்றா நீ",
+          "என் உயிரா நீ என் உயிரே நீ",
+          "தோன்றி மறையும் தூறல் நீயா",
+          "தொண்டும் மனதில் நின்ற நீயா"
+        ]
+      }
+    ]
+  },
+
+  "generation": {
+    "_doc_duration": "Target audio length in seconds. Range: 10–600. Typical: 120 (2min), 180 (3min), 240 (4min). Default: 120.",
+    "duration": 240,
+
+    "_doc_batch_size": "Number of variations to generate. Each gets a different seed. Range: 1–8. Default: 1.",
+    "batch_size": 1,
+
+    "_doc_inference_steps": "Diffusion steps. 8 = turbo (fast, good quality). 32–100 = base model (slower, potentially higher quality). Default: 8.",
+    "inference_steps": 8,
+
+    "_doc_guidance_scale": "Classifier-free guidance strength. Higher = stricter prompt adherence. Range: 1.0–15.0. 7.0 is a good default. Only applies to non-turbo model. Default: 7.0.",
+    "guidance_scale": 7.0,
+
+    "_doc_audio_format": "Output format. Options: 'mp3', 'wav', 'flac', 'wav32', 'opus', 'aac'. Default: 'mp3'.",
+    "audio_format": "mp3",
+
+    "_doc_mp3_bitrate": "MP3 bitrate (only when audio_format='mp3'). Options: '128k', '192k', '256k', '320k'. Default: '192k'.",
+    "mp3_bitrate": "192k",
+
+    "_doc_seed": "Random seed for reproducibility. -1 = random each time. Any positive integer = deterministic. Default: -1.",
+    "seed": -1,
+
+    "_doc_fade_out_duration": "Fade-out at end of audio in seconds. 0 = no fade. Default: 2.0.",
+    "fade_out_duration": 2.0,
+
+    "_doc_thinking": "Enable 5Hz LLM chain-of-thought reasoning for music metadata and audio codes. true = better quality (uses LLM). false = faster (DiT-only). Default: true.",
+    "_thinking": true
+  },
+
+  "output": {
+    "_doc_song_id": "Unique identifier for this song. Used as the output subdirectory name. Default: 'song-00001'.",
+    "song_id": "song-00001",
+
+    "_doc_output_dir": "Base output directory (relative to ace-step-1.5 root, or absolute). Default: 'output/tamil_songs'.",
+    "output_dir": "output/tamil_songs"
+  }
+}

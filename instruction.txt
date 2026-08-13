@@ -1,0 +1,83 @@
+<|im_start|>system
+# Instruction
+Generate audio semantic tokens based on the given conditions:
+
+<|im_end|>
+<|im_start|>user
+# Caption
+emotional Tamil melodic ballad, male vocal, soft acoustic guitar, gentle strings, warm piano, romantic lullaby feel, slow tempo, heartfelt and tender, cinematic Indian film music style
+
+# Lyric
+[Intro]
+Kanavaa... illai kaatraa...
+Kanavaa... nee.. kaatraa...
+
+[Verse 1]
+Kaiyil midhakkum kanavaa nee
+Kai kaal mulaitha kaatraa nee
+Kaiyil yendhiyum kanakkavillayae
+Nuraiyaal seidha silayaa nee
+
+[Verse 2]
+Ippadi unnai yendhi kondae
+Indira logam poi vidavaa
+Idaiyil konjam vali yeduthaalum
+Chandira tharaiyil paayidavaa
+
+[Chorus]
+Kaiyil midhakkum kanavaa nee
+Kai kaal mulaitha kaatraa nee
+Kaiyil yendhiyum kanakkavillayae
+Nuraiyaal seidha silayaa nee
+
+[Verse 3]
+Nilavil porulgal yedai izhakkum
+Neerilum porul yedai izhakkum
+Kaadhalil kooda yedai izhakkum
+Indru kandenadi
+Adhai kandu kondenadi
+
+[Verse 4]
+Kaadhal thaaimai irandu mattum
+Baaram yenbadhai ariyaadhu
+Un palingu mugathai paarthu kondaal
+Pasiyo valiyo theriyaadhu
+
+[Bridge]
+Unnai mattum sumandhu nadandhaal
+Uyaram dhooram theriyaadhu
+Unnai mattum sumandhu nadandhaal
+Uyaram dhooram theriyaadhu
+
+[Verse 5]
+Un mel matroru poo vizhundhaal
+Yennaal thaanga mudiyaadhu
+
+[Chorus]
+Kaiyil midhakkum kanavaa nee
+Kai kaal mulaitha kaatraa nee
+Kaiyil yendhiyum kanakkavillayae
+Nuraiyaal seidha silayaa nee
+
+[Outro]
+Kanavaa... nee.. kaatraa...
+Kanavaa... nee.. kaatraa...
+
+<|im_end|>
+<|im_start|>assistant
+<think>
+bpm: 161
+caption: A gentle and emotional Tamil ballad driven by an intricate nylon-string acoustic
+  guitar playing arpeggiated chords and melodic fills. A warm, clean bass guitar provides
+  a subtle foundation alongside soft, atmospheric synth pads. The lead vocal is a
+  clear, heartfelt male voice, delivered with a smooth and emotive quality, enhanced
+  by a touch of reverb. The song maintains a consistent, flowing dynamic, building
+  slightly in the choruses while maintaining an overall romantic and tender mood.
+  The arrangement is sparse and acoustic, focusing entirely on the interplay between
+  the guitar and the sincere vocal performance, concluding with a fading guitar melody
+  and a final, whispered vocal phrase.
+duration: 240
+keyscale: E minor
+timesignature: 4
+</think>
+

@@ -252,6 +252,7 @@ lokr_output/
 config.json
 
 acestep_output/
+output/
 # macOS
 .DS_Store
 

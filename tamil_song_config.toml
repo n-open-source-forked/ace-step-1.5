@@ -1,0 +1,74 @@
+task_type = "text2music"
+
+caption = "emotional Tamil melodic ballad, male vocal, soft acoustic guitar, gentle strings, warm piano, romantic lullaby feel, slow tempo, heartfelt and tender, cinematic Indian film music style"
+
+lyrics = """[Intro]
+Kanavaa... illai kaatraa...
+Kanavaa... nee.. kaatraa...
+
+[Verse 1]
+Kaiyil midhakkum kanavaa nee
+Kai kaal mulaitha kaatraa nee
+Kaiyil yendhiyum kanakkavillayae
+Nuraiyaal seidha silayaa nee
+
+[Verse 2]
+Ippadi unnai yendhi kondae
+Indira logam poi vidavaa
+Idaiyil konjam vali yeduthaalum
+Chandira tharaiyil paayidavaa
+
+[Chorus]
+Kaiyil midhakkum kanavaa nee
+Kai kaal mulaitha kaatraa nee
+Kaiyil yendhiyum kanakkavillayae
+Nuraiyaal seidha silayaa nee
+
+[Verse 3]
+Nilavil porulgal yedai izhakkum
+Neerilum porul yedai izhakkum
+Kaadhalil kooda yedai izhakkum
+Indru kandenadi
+Adhai kandu kondenadi
+
+[Verse 4]
+Kaadhal thaaimai irandu mattum
+Baaram yenbadhai ariyaadhu
+Un palingu mugathai paarthu kondaal
+Pasiyo valiyo theriyaadhu
+
+[Bridge]
+Unnai mattum sumandhu nadandhaal
+Uyaram dhooram theriyaadhu
+Unnai mattum sumandhu nadandhaal
+Uyaram dhooram theriyaadhu
+
+[Verse 5]
+Un mel matroru poo vizhundhaal
+Yennaal thaanga mudiyaadhu
+
+[Chorus]
+Kaiyil midhakkum kanavaa nee
+Kai kaal mulaitha kaatraa nee
+Kaiyil yendhiyum kanakkavillayae
+Nuraiyaal seidha silayaa nee
+
+[Outro]
+Kanavaa... nee.. kaatraa...
+Kanavaa... nee.. kaatraa...
+"""
+
+instrumental = false
+vocal_language = "ta"
+duration = 240
+audio_format = "mp3"
+save_dir = "output/tamil_song"
+batch_size = 1
+thinking = true
+use_cot_metas = true
+use_cot_caption = true
+use_cot_lyrics = false
+use_cot_language = false
+inference_steps = 8
+seed = -1
+use_random_seed = true
