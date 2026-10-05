@@ -51,6 +51,15 @@ _PARAM_KEYS = (
     "lm_temperature",
     "fade_in_duration",
     "fade_out_duration",
+    "task_type",
+    "src_audio",
+    "repainting_start",
+    "repainting_end",
+    "repaint_mode",
+    "repaint_strength",
+    "repaint_wav_crossfade_sec",
+    "reference_audio",
+    "audio_cover_strength",
 )
 
 _DEFAULTS: Dict[str, Any] = {
@@ -74,7 +83,21 @@ _DEFAULTS: Dict[str, Any] = {
     "lm_backend": "vllm",
     "offload_to_cpu": True,
     "extract_lrc": True,
+    # Repaint (regenerate one time range of an existing take, 3-90 s).
+    "task_type": "text2music",
+    "src_audio": None,
+    "repainting_start": 0.0,
+    "repainting_end": -1,
+    "repaint_mode": "balanced",
+    "repaint_strength": 0.5,
+    "repaint_wav_crossfade_sec": 0.0,
+    # Cover (re-sing src_audio's melody with new lyrics/caption) and reference
+    # audio (borrow timbre/performance style; works with any task).
+    "reference_audio": None,
+    "audio_cover_strength": 0.5,
 }
+
+_SRC_AUDIO_TASKS = ("repaint", "cover")
 
 
 def load_request(path: Path) -> Dict[str, Any]:
@@ -91,6 +114,18 @@ def load_request(path: Path) -> Dict[str, Any]:
         data.setdefault(key, default)
     if not isinstance(data["seeds"], list) or not data["seeds"]:
         raise ValueError("request.seeds must be a non-empty list of integers")
+    task = data["task_type"]
+    if task in _SRC_AUDIO_TASKS:
+        src = data.get("src_audio")
+        if not src or not Path(src).is_file():
+            raise ValueError(f"{task} needs an existing src_audio, got {src!r}")
+        # ACE-Step skips the LM for these tasks; don't spend VRAM loading it.
+        data["thinking"] = False
+    elif task != "text2music":
+        raise ValueError(f"Unsupported task_type {task!r}")
+    ref = data.get("reference_audio")
+    if ref and not Path(ref).is_file():
+        raise ValueError(f"reference_audio not found: {ref!r}")
     return data
 
 
@@ -240,6 +275,7 @@ class CandidateWorker:
         duration = (
             pred_latents.shape[1] / 25.0 if pred_latents is not None else float(req["duration"])
         )
+        _write_repaint_sidecar(seed_dir, audio_name, pred_latents, actual_seed)
 
         lrc_ok, lrc_error = False, None
         if req["extract_lrc"]:
@@ -288,6 +324,22 @@ class CandidateWorker:
             json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8"
         )
         return True, None
+
+
+def _write_repaint_sidecar(seed_dir: Path, audio_name: str, pred_latents: Any, seed: int) -> None:
+    """Cache final latents beside the audio, in the sidecar format ACE-Step's
+    repaint path looks for (``<audio>.json`` + ``.repaint_latents.npy``), so a
+    later repaint of this take skips the lossy decode/re-encode cycle."""
+    if pred_latents is None:
+        return
+    import numpy as np
+
+    stem = Path(audio_name).stem
+    latent_name = f"{stem}.repaint_latents.npy"
+    np.save(seed_dir / latent_name, pred_latents[0].detach().cpu().float().numpy())
+    (seed_dir / f"{stem}.json").write_text(
+        json.dumps({"seed": seed, "repaint_source_latents_file": latent_name}), encoding="utf-8"
+    )
 
 
 def _jsonable(value: Any) -> Any:
