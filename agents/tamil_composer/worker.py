@@ -95,6 +95,9 @@ _DEFAULTS: Dict[str, Any] = {
     # audio (borrow timbre/performance style; works with any task).
     "reference_audio": None,
     "audio_cover_strength": 0.5,
+    # Music only: ACE-Step gets "[Instrumental]" as lyrics (its `instrumental`
+    # flag is not consumed by the DiT); request lyrics stay for the caller.
+    "instrumental": False,
 }
 
 _SRC_AUDIO_TASKS = ("repaint", "cover")
@@ -234,6 +237,8 @@ class CandidateWorker:
 
         req = self.request
         params = GenerationParams(**{k: req[k] for k in _PARAM_KEYS})
+        if req["instrumental"]:
+            params.lyrics = "[Instrumental]"
         params.seed = seed
         if self.llm_handler is None:
             params.thinking = False
